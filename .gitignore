@@ -1,19 +1,7 @@
 .jupyter/desktop-settings.json
 .jupyter/desktop-workspaces/default-37a8.jupyterlab-workspace
-Appendix/.ipynb_checkpoints/db_gen-checkpoint.ipynb
-Mapping/.ipynb_checkpoints/choropleth_maps-checkpoint.ipynb
-Mapping/.ipynb_checkpoints/CO-EST2023-ALLDATA-checkpoint.pdf
-Mapping/.ipynb_checkpoints/colormap_tests-checkpoint.ipynb
-.ipynb_checkpoints/project_plans-checkpoint.csv
-Data_Cleaning/.ipynb_checkpoints/data_cleaning-checkpoint.ipynb
-Graphing/.ipynb_checkpoints/graphing-checkpoint.ipynb
-Old_Code_Copies/.ipynb_checkpoints/choropleth_maps_OLD-checkpoint.ipynb
 Old_Code_Copies/choropleth_maps_OLD.ipynb
-Spreadsheet_Ops/.ipynb_checkpoints/spreadsheet_ops-checkpoint.ipynb
-Updating_Online_Spreadsheets/.ipynb_checkpoints/updating_online_spreadsheets-checkpoint.ipynb
-.ipynb_checkpoints/README-checkpoint.md
 project_plans_and_notes.csv
-Mapping/.ipynb_checkpoints/test_map-checkpoint.html
 Outtakes/State Data with County Shapefiles.png
 project_plans_and_notes.xlsx
 Mapping/choropleth_maps.pdf
@@ -22,4 +10,8 @@ Outtakes/A few too many labels.png
 Outtakes/Confused Lat and Lon.png
 Appendix/launch_miniforge_shortcut.lnk
 Appendix/launch_pfnv2.bat
-Mapping/.ipynb_checkpoints/choropleth_maps_test_save-checkpoint.ipynb
+**-checkpoint**
+pfn_2_project_plans_and_notes.xlsx
+**.pyc
+**_OLD_**
+Mapping/test_screenshot.png

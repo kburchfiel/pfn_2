@@ -24,7 +24,7 @@ In this section, you'll learn how to use Python to perform some basic data clean
 
 Plotly is a powerful tool for creating both interactive and static charts. This section will demonstrate how to create bar, line, and scatter plots along with treemaps (an alternative to pie charts).
 
-## Mapping (In progress)
+## Mapping (Initial draft complete)
 
 This section will demonstrate how to use Folium to create interactive choropleth maps. I may expand this section in the future to include additional map types (such as maps of points and route maps).
 

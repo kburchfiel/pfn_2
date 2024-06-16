@@ -43,10 +43,10 @@ def cptt(
     round_boundary_labels = False,
     boundary_label_round_val = 0,
     delete_html_file = False): 
-    # cptt stands for 'Choropleth and Tooltip'
     
     '''This function creates a chorolpeth map with a set of tooltips
-    via folium.GeoJson(). Creating these two items together saves
+    via folium.GeoJson(). (cptt stands for 'chorolpeth and tooltip.' 
+    Creating these two items together saves
     storage space versus building them individually.
     The function also adds in boundary labels upon request.
 
@@ -249,24 +249,23 @@ def cptt(
     # Based on Choropleth() definition within
     # https://github.com/python-visualization/folium/blob/main/folium/features.py
     
-    # To reverse this color scheme, '_r' can be added to the end of the first
-    # argument (e.g. 'RdYlBu_r'). 
-    # Source: 
+    # To reverse the set of colors passed to color_scheme, add '_r' 
+    # to the end of the string (e.g. 'RdYlBu_r'). Source: 
     # https://github.com/python-visualization/branca/blob/main/branca/utilities.py
 
 
     # Determining which colors to apply to each result:
     if percentile_bins == True: # In this case, percentile-based bins will
         # be used.
-        bins = list(gdf_condensed[data_col].quantile(
+        bin_thresholds = list(gdf_condensed[data_col].quantile(
         np.linspace(0, 1, bin_count+1))) 
         # For np.linspace() documentation, see:
         # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
         
         stepped_cm = StepColormap(
             colors = color_range, 
-            vmin = bins[0], vmax = bins[-1],
-            index = bins)
+            vmin = bin_thresholds[0], vmax = bin_thresholds[-1],
+            index = bin_thresholds)
         # Based on the self.color_scale initialization within Folium's Choropleth() 
         # source code (available at
         # https://github.com/python-visualization/folium/blob/main/folium/features.py )
@@ -279,9 +278,12 @@ def cptt(
             vmax = gdf_condensed[data_col].max())
         # Based on: 
         # https://python-visualization.github.io/branca/colormap.html#branca.colormap.StepColormap
+
+    # The following code will both assign colors from StepColorMap
+    # to each region *and* add in tooltips. This approach allows the
+    # colors and tooltips to reference the same set of outlines,
+    # thus allowing for a smaller file size.
     
-    
-    # Creating both the choropleth outlines and the tooltips to display:
     g = folium.GeoJson(
         gdf_condensed,
         style_function=lambda x: {
@@ -321,44 +323,41 @@ def cptt(
         # created a relatively detailed map of the contiguous 48 US states. 
         # If you'd like to create an even more detailed map, consider setting 
         # your starting zoom to 7 and your window size to 6000,3375.
-        options.add_argument('--headless') # I found that this addition 
+        options.add_argument('--headless') # In my experience, this addition 
         # (which prevents the Selenium-driven browser from displaying on your 
-        # computer) 
-        # was necessary for getting 4K screenshots to actually display as a 
-        # 3840x2160
-        # file. Without this line, the screenshot would get rendered
-        # as a 3814 x 1868-pixel file.
+        # computer) was necessary for allowing 4K screenshots to get saved
+        # as 3840x2160-pixel images. Without this line, the screenshots would 
+        # get rendered with a resolution of 3814x1868 pixels.
         # Source of the above two lines:  
         # https://www.selenium.dev/documentation/webdriver/browsers/chrome/
         # and
         # https://github.com/GoogleChrome/chrome-launcher/blob/main/docs/chrome-flags-for-tools.md
+        # I learned about the necessity of using headless mode *somewhere* on 
+        # StackOverflow. Many answers to this question regarding generating 
+        # screenshots reference it as an important step, for instance:
+        # https://stackoverflow.com/questions/41721734/take-screenshot-of-full-page-with-selenium-python-with-chromedriver/57338909
+
         
-        # Launching our Selenium driver:
+        # Launching the Selenium driver:
         driver = webdriver.Chrome(options=options) 
         # Source: https://www.selenium.dev/documentation/webdriver/browsers/chrome/
         
-        # Navigating to our map:
+        # Navigating to the map:
         driver.get(f"{html_map_folder}/{map_filename}.html")
         # Source: https://www.selenium.dev/documentation/
-        # Adding in os.getcwd() + '/' converts our relative path (which,
-        # by itself,
-        # wouldn't be compatible with Selenium)
-        # into an absolute path. (Note that '/' still works on Windows, 
-        # at least
-        # in my experience.) 
         time.sleep(3) # Helps ensure that the browser has enough 
         # time to download
         # map contents from the tile provider. This time might need to be
         # increased if a slow internet connection is in use. Conversely,
         # if no tiles are being incorporated into the map, 
         # there may not be any need to call
-        # time.sleep() at all.
+        # time.sleep().
         # Taking our screenshot and then saving it as a PNG image:
         driver.get_screenshot_as_file(f"{png_map_folder}/{map_filename}.png")
         # Source: 
         # https://selenium-python.readthedocs.io/api.html#selenium.webdriver.remote.webdriver.WebDriver.get_screenshot_as_file
         
-        # Exiting out of our webdriver:
+        # Exiting out of the webdriver:
         driver.quit()
         # Source: https://www.selenium.dev/documentation/
     
@@ -424,7 +423,8 @@ def create_map_and_screenshot(
 
     
     # Creating a copy of the map optimized for interactive viewing:
-    # (We'll retain this copy of the HTML file.)
+    # (This HTML file will get retained, whereas that created in order to 
+    # produce the screenshot in the earlier cptt() call got deleted.)
     # Note that this code was called *after* the screenshot generation
     # code so that the latter's HTML map doesn't overwrite this one.
     m = cptt(

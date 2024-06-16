@@ -15,3 +15,5 @@ pfn_2_project_plans_and_notes.xlsx
 **.pyc
 **_OLD_**
 Mapping/test_screenshot.png
+Mapping/maps/basic_choropleth.html
+Mapping/maps/choropleth_with_tooltips.html

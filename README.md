@@ -12,6 +12,10 @@ In this project, I will demonstrate how nonprofits can use Python to manage, ana
 
 Note: many of these sections have not yet been completed or even started. I'm working on this project in my free time (which, as a new dad, is not very abundant!), so it may be a while before I begin or finalize a given section.
 
+## Introduction (Not yet started)
+
+This section will explain (1) why you should consider using Python at your nonprofit organization and (2) how I put this code together.
+
 ## Spreadsheet Operations (Not yet started)
 
 This section will demonstrate how to use Python to perform many tasks for which you might normally use a spreadsheet editor. It also provides an introduction to Pandas, a powerful library for viewing and transforming data within Python.
@@ -26,7 +30,20 @@ Plotly is a powerful tool for creating both interactive and static charts. This 
 
 ## Mapping (Initial draft complete)
 
-This section will demonstrate how to use Folium to create interactive choropleth maps. I may expand this section in the future to include additional map types (such as maps of points and route maps).
+This section demonstrates how to use Folium to create interactive choropleth maps. I may expand this section in the future to include additional map types (such as maps of points and routes).
+
+The interactive maps created in this section can be viewed using the following links:
+
+[Net migration rates by county](https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-county)
+
+[Net migration rates by state](https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-state?authuser=0)
+
+Here are static copies of these maps:
+
+![](https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_county_2020-2023.png)
+
+![](https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_state_2020-2023.png)
+
 
 ## Updating Online Spreadsheets (Not yet started)
 

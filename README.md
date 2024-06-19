@@ -40,9 +40,9 @@ The interactive maps created in this section can be viewed using the following l
 
 Here are static copies of these maps:
 
-![](https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_county_2020-2023.png)
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_county_2020-2023.png" width="500"/>
 
-![](https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_state_2020-2023.png)
+<img src="https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_state_2020-2023.png" width="500"/>
 
 
 ## Updating Online Spreadsheets (Not yet started)

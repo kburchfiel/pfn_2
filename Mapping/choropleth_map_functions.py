@@ -29,7 +29,9 @@ def cptt(
     data_col, boundary_name_col,
     data_col_alias, boundary_name_alias,
     zoom_start = 6, 
-    percentile_bins = False, bin_count = 6, color_scheme = 'RdYlBu',
+    bin_type = 'linear', 
+    bin_count = 6, custom_threshold_list = [], 
+    color_scheme = 'RdYlBu',
     tooltip_variable_list = [], tooltip_alias_list = [],
     save_html = True, save_screenshot = True,
     driver_window_width = 3000,
@@ -77,13 +79,20 @@ def cptt(
     (other than boundary_name_col
     and data_col, which will get added in automatically) 
     to display within the tooltip.
-    
-    percentile_bins: Set to True in order to base choropleth colors on 
-    percentiles (resulting in roughly equal numbers of results per bin)
-    or to False in order to create equally spaced bins.
-    
-    bin_count: The number of separate colors to show within the map.
-    
+
+    bin_type: Set to 'linear' (the default argument) to create 
+    equally spaced bins; 'percentile' to base choropleth colors on 
+    percentiles (resulting in roughly equal numbers of results per bin);
+    or 'custom' to pass in a list of custom bins. (The custom option can be
+    particularly useful when you wish to use the same set of bins for 
+    multiple maps.)
+
+    bin_count: The number of separate colors to show within the map. This
+    parameter will be ignored when bin_type is set to 'custom.'
+
+    custom_threshold_list: A list of custom bin ranges to use for the map.
+    Will only get applied when bin_type is set to 'custom.'
+        
     color_scheme: The color scheme to use within the map (e.g. 'RdYlBu'). 
     Options can be found on https://colorbrewer2.org/ . 
     In order to reverse
@@ -245,6 +254,13 @@ def cptt(
     )
     
     # Creating our set of colors to use for the choropleth map:
+    if bin_type == 'custom': # In this case, bin_count will be overwritten
+        # by the length of custom_threshold_list minus 1. (The number of
+        # bins will always be one less than the number of thresholds, as 
+        # two thresholds are needed to establish the boundaries for one bin.
+        # For instance, if you have three thresholds (0, 1, and 2),
+        # two bins can be created from this list: 0-1 and 1-2.)
+        bin_count = len(custom_threshold_list) - 1
     color_range = color_brewer(color_scheme, n = bin_count)
     # Based on Choropleth() definition within
     # https://github.com/python-visualization/folium/blob/main/folium/features.py
@@ -255,13 +271,37 @@ def cptt(
 
 
     # Determining which colors to apply to each result:
-    if percentile_bins == True: # In this case, percentile-based bins will
-        # be used.
-        bin_thresholds = list(gdf_condensed[data_col].quantile(
-        np.linspace(0, 1, bin_count+1))) 
-        # For np.linspace() documentation, see:
-        # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+    
+    if bin_type == 'linear': # Equally-spaced bins will be used. 
+        # The number of bins will be derived from the number of 
+        # colors in color_range.
+        stepped_cm = StepColormap(
+            colors = color_range, 
+            vmin = gdf_condensed[data_col].min(),
+            vmax = gdf_condensed[data_col].max())
+        # Based on: 
+        # https://python-visualization.github.io/branca/colormap.html#branca.colormap.StepColormap
+
+    else: # In this case, a different approach to creating the StepColorMap
+        # will be used that better accommodates non-equally-spaced bins.
         
+        if bin_type == 'percentile': # In this case, percentile-based bins will
+            # be used.
+            bin_thresholds = list(gdf_condensed[data_col].quantile(
+            np.linspace(0, 1, bin_count+1))) 
+            # For np.linspace() documentation, see:
+            # https://numpy.org/doc/stable/reference/generated/numpy.linspace.html
+    
+        elif bin_type == 'custom': # This condition allows for a set of custom
+            # bins to be passed in.
+            bin_thresholds = custom_threshold_list.copy()
+
+        else:
+            raise ValueError("bin_type must be set to 'linear', 'percentile, \
+or 'custom.'")
+        
+        # The following approach works for both 'percentile' and 
+        # 'custom' bin_type conditions.
         stepped_cm = StepColormap(
             colors = color_range, 
             vmin = bin_thresholds[0], vmax = bin_thresholds[-1],
@@ -270,15 +310,7 @@ def cptt(
         # source code (available at
         # https://github.com/python-visualization/folium/blob/main/folium/features.py )
 
-    else: # Equally-spaced bins will be used instead. Note that the number
-        # of bins will be derived from the number of colors in color_range.
-        stepped_cm = StepColormap(
-            colors = color_range, 
-            vmin = gdf_condensed[data_col].min(),
-            vmax = gdf_condensed[data_col].max())
-        # Based on: 
-        # https://python-visualization.github.io/branca/colormap.html#branca.colormap.StepColormap
-
+    
     # The following code will both assign colors from StepColorMap
     # to each region *and* add in tooltips. This approach allows the
     # colors and tooltips to reference the same set of outlines,
@@ -374,7 +406,9 @@ def create_map_and_screenshot(
     data_col_alias, boundary_name_alias,
     html_zoom_start = 5,
     screenshot_zoom_start = 6, 
-    percentile_bins = False, bin_count = 6, color_scheme = 'RdYlBu',
+    bin_type = 'linear', bin_count = 6, 
+    custom_threshold_list = [],
+    color_scheme = 'RdYlBu',
     tooltip_variable_list = [], tooltip_alias_list = [],
     map_filename = 'map', html_map_folder = '',
     png_map_folder = '',
@@ -392,7 +426,8 @@ def create_map_and_screenshot(
     html_zoom_start and screenshot_zoom_start: the zoom settings to use
     for the HTML and PNG maps, respectively.
     
-    For information on other variables, consult the cptt() reference.'''
+    For information on other variables, consult the documentation within 
+    cptt().'''
 
     # Creating an HTML map optimized for generating a screenshot;
     # creating the screenshot; and then deleting the HTML copy of the map
@@ -404,8 +439,10 @@ def create_map_and_screenshot(
     data_col_alias = data_col_alias, 
         boundary_name_alias = boundary_name_alias,
     zoom_start = screenshot_zoom_start, 
-    percentile_bins = percentile_bins, 
-    bin_count = bin_count, color_scheme = color_scheme,
+    bin_type = bin_type, 
+    bin_count = bin_count, 
+    custom_threshold_list = custom_threshold_list, 
+    color_scheme = color_scheme,
     tooltip_variable_list = tooltip_variable_list, 
         tooltip_alias_list = tooltip_alias_list,
     save_html = True, save_screenshot = True,
@@ -434,8 +471,10 @@ def create_map_and_screenshot(
     data_col_alias = data_col_alias, 
         boundary_name_alias = boundary_name_alias,
     zoom_start = html_zoom_start, 
-    percentile_bins = percentile_bins, 
-    bin_count = bin_count, color_scheme = color_scheme,
+    bin_type = bin_type, 
+    bin_count = bin_count, 
+    custom_threshold_list = custom_threshold_list, 
+    color_scheme = color_scheme,
     tooltip_variable_list = tooltip_variable_list, 
         tooltip_alias_list = tooltip_alias_list,
     save_html = True, save_screenshot = False,

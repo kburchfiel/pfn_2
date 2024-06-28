@@ -173,6 +173,12 @@ def cptt(
     gdf_condensed = gdf.copy()[
     [boundary_name_col, data_col, geometry_col] + tooltip_variable_list]
 
+    # Removing any NaN data_col entries from our dataset so that they
+    # won't interfere with our mapping code:
+    # {data_col} is surrounded by ` characters to make this code 
+    # compatible with column names that contain spaces.
+    gdf_condensed.query(f"`{data_col}`.isna() == False", inplace = True)
+
     # print(gdf_condensed.memory_usage(deep=True).sum() / 1000000)
 
     # Creating a blank map as the starting point for our choropleth:
@@ -236,7 +242,7 @@ def cptt(
     alias_list = [boundary_name_alias, data_col_alias] + tooltip_alias_list
 
     
-    print(tooltip_field_list, alias_list)
+    # print(tooltip_field_list, alias_list)
     
     tooltip = folium.GeoJsonTooltip(
         fields= tooltip_field_list,

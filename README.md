@@ -40,13 +40,13 @@ Plotly is a powerful tool for creating both interactive and static charts. This 
 
 This section demonstrates how to use Folium to create interactive choropleth maps. I may expand this section in the future to include additional map types (such as maps of points and routes).
 
-The interactive maps created in this section can be viewed using the following links:
+Here are examples of the choropleth maps created within this section:
 
 [Net migration rates by county](https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-county)
 
 [Net migration rates by state](https://sites.google.com/view/pfn2-choropleth-maps/net-migration-by-state?authuser=0)
 
-Here are static copies of these maps:
+And here are static copies of these maps:
 
 <img src="https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_county_2020-2023.png" width="500"/>
 

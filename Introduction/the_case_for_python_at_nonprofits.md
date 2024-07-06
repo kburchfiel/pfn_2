@@ -13,6 +13,8 @@ Python not only supports many different use cases, but also allows you to create
 
 This flexibility is enhanced by the wide variety of libraries offered for Python. For instance, *Pandas* is a powerful tool for reading, reformatting, and analyzing data. *Plotly* allows you to easily create interactive charts. *Folium* creates fantastic interactive maps. And *Dash*, together with Plotly, can power interactive online dashboards in order to make your analyses and visualizations easier to share with others. (Each of these libraries will get featured in Python for Nonprofits.) These packages aren't part of the core Python programming language, but they are easy to install, and detailed documentation on each of them is easy to find online.
 
+One drawback of this flexibility, however, is that users of a Python script that another user wrote will need to take additional time to understand how it works--especially if it has limited documentation. As long as someone has learned how to use a proprietary program, he or she should have little trouble making updates to a file that someone else created within that program; there's just less room for variation within proprietary programs. However, a Python expert will probably still need to take time to understand a script that another expert created. In fact, that script might incorporate libraries or methods that the expert isn't yet familiar with, making additional study necessary.
+
 ## Python is *Fast*
 Once you've created a Python script that completes a certain task, you'll then be able to finish that task much more quickly than you could have within a spreadsheet editor or other tool. Therefore, the more you incorporate Python into your workflow, the more productive you and your team can be.
 

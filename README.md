@@ -74,7 +74,7 @@ This section will demonstrate how to use Python to export data to a Google Sheet
 
 In this section, you'll learn how to use the Dash and Plotly libraries to create interactive online dashboards.
 
-# Part 6: Appendix
+## Part 6: Appendix
 
 ### NVCU Database Generation
 

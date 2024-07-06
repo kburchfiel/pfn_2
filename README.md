@@ -10,33 +10,45 @@ In this project, I will demonstrate how nonprofits can use Python to retrieve, a
 
 # Contents
 
-Note: many of these sections have not yet been completed or even started. I'm working on this project in my free time (which, as a new dad, is not very abundant!), so it may be a while before I begin or finalize a given section.
+Note: many of these sections have not yet been completed or even started; in addition, other sections may be added in later on. I'm working on this project in my free time (which, as a new dad, is not very abundant!), so it may be a while before I begin or finalize a given section.
 
-## Introduction (Not yet complete)
+## Part 1: Introduction
 
-This section will explain (1) why you should consider using Python at your nonprofit organization and (2) how I put this code together.
+### Why Use Python (complete)
 
-## Data Retrieval (Not yet started)
+This essay explains why you should consider using Python at your nonprofit organization.
 
-This section will show how to import data into your Python scripts from a range of sources.
+## Part 2: Retrieval
 
-## Spreadsheet Operations (Not yet started)
+### Data Retrieval (Mostly Complete)
 
-This section will demonstrate how to use Python to perform many tasks for which you might normally use a spreadsheet editor. It also provides an introduction to Pandas, a powerful library for viewing and transforming data within Python.
+This section provides a brief overview of importing data into Python scripts from multiple sources.
 
-## Retrieving Census Data (Mostly Complete)
+### Data Prep (mostly complete)
+
+This section shows how to clean and reformat data so that it can be incorporated into various analyses.
+
+### Retrieving Census Data (Mostly Complete)
 
 This section shows how to use Python to retrieve data from the US Census API, a great source of public-domain demographic data.
 
-## Data Cleaning (Not yet started)
+## Part 3: Analyses
 
-In this section, you'll learn how to use Python to perform some basic data cleaning tasks. The section also provides tips on handling duplicate entries and missing data.
+### Descriptive Stats (not yet started)
 
-## Graphing (Not yet started)
+In this section, you'll learn how to use Python to calculate a range of descriptive statistics.
+
+### Regression Analyses (not yet started)
+
+This section will show how to create linear regressions within Python. 
+
+## Part 4: Visualizations
+
+### Graphing (Not yet started)
 
 Plotly is a powerful tool for creating both interactive and static charts. This section will demonstrate how to create bar, line, and scatter plots along with treemaps (an alternative to pie charts).
 
-## Mapping (Initial draft complete)
+### Mapping (Initial draft complete)
 
 This section demonstrates how to use Folium to create interactive choropleth maps. I may expand this section in the future to include additional map types (such as maps of points and routes).
 
@@ -52,15 +64,18 @@ And here are static copies of these maps:
 
 <img src="https://raw.githubusercontent.com/kburchfiel/pfn_2/main/Mapping/map_screenshots/net_migration_rate_state_2020-2023.png" width="500"/>
 
+## Part 5: Publication
 
-## Updating Online Spreadsheets (Not yet started)
+### Updating Online Spreadsheets (Not yet started)
 
 This section will demonstrate how to use Python to export data to a Google Sheets workbook, thus enabling others to view that data.
 
-## Online Visualizations (Not yet started)
+### Online Visualizations (Not yet started)
 
 In this section, you'll learn how to use the Dash and Plotly libraries to create interactive online dashboards.
 
-## Appendix
+# Part 6: Appendix
 
-This section will contain a Jupyter Notebook that I'll use to construct a SQLite database with **fictional** data for an imaginary university. The tables in this dataset will get used in many parts of Python for Nonprofits.
+### NVCU Database Generation
+
+This section contains a Jupyter Notebook that I used to construct a SQLite database with **fictional** data for an imaginary university. The tables in this dataset will play a role in many parts of Python for Nonprofits.
